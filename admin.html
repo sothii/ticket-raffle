@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilet Çekiliş Sistemi - Admin Paneli</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div id="loginSection">
+            <h1>Admin Girişi</h1>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Admin Kullanıcı Adı:</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Şifre:</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit">Giriş Yap</button>
+            </form>
+        </div>
+
+        <div id="adminPanel" style="display: none;" class="admin-layout">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Admin Panel</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-item" data-page="requests">
+                        <i class="fas fa-ticket-alt"></i>
+                        Talepler
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <button onclick="logout()" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Çıkış Yap
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div id="dashboardPage" class="content-page">
+                    <h1>Dashboard</h1>
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Toplam Talep</h3>
+                                <p id="totalRequests">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Bekleyen</h3>
+                                <p id="pendingRequests">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon approved">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Onaylanan</h3>
+                                <p id="approvedRequests">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon rejected">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Reddedilen</h3>
+                                <p id="rejectedRequests">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Bilet Alan Üye Sayısı</h3>
+                                <p id="uniqueUsers">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon top-user">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>En Çok Bilet Alan Üye</h3>
+                                <p id="topUser">-</p>
+                                <small id="topUserCount">0 bilet</small>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon today">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Bugünkü Talepler</h3>
+                                <p id="todayRequests">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon average">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Ortalama Günlük Talep</h3>
+                                <p id="avgRequests">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="requestsPage" class="content-page" style="display: none;">
+                    <div class="page-header">
+                        <h1>Bilet Talepleri</h1>
+                        <div class="filter-section">
+                            <div class="search-box">
+                                <div class="search-input">
+                                    <div class="input-container">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="usernameSearch" placeholder="Kullanıcı adı ile ara...">
+                                    </div>
+                                </div>
+                                <div class="search-input">
+                                    <div class="input-container">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        <input type="text" id="ticketSearch" placeholder="Bilet numarası ile ara...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <div class="date-filter">
+                                    <div class="date-input">
+                                        <i class="fas fa-calendar"></i>
+                                        <input type="date" id="startDate" placeholder="Başlangıç tarihi">
+                                    </div>
+                                    <span class="date-separator">-</span>
+                                    <div class="date-input">
+                                        <i class="fas fa-calendar"></i>
+                                        <input type="date" id="endDate" placeholder="Bitiş tarihi">
+                                    </div>
+                                </div>
+                                <select id="statusFilter">
+                                    <option value="all">Tüm Talepler</option>
+                                    <option value="pending">Bekleyenler</option>
+                                    <option value="approved">Onaylananlar</option>
+                                    <option value="rejected">Reddedilenler</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="requests-table">
+                        <div class="table-header">
+                            <div class="header-cell">Kullanıcı Adı</div>
+                            <div class="header-cell">Bilet Numarası</div>
+                            <div class="header-cell">Tarih</div>
+                            <div class="header-cell">İşlem Durumu</div>
+                        </div>
+                        <div id="ticketRequests" class="table-body">
+                            <!-- Talepler burada listelenecek -->
+                        </div>
+                    </div>
+                    <div id="pagination" class="pagination">
+                        <!-- Sayfalama butonları burada oluşturulacak -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/admin.js"></script>
+</body>
+</html> 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilet Çekiliş Sistemi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bilet Çekiliş Sistemi</h1>
+        <div class="ticket-form">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="ticketNumber">Bilet Numarası:</label>
+                <input type="text" 
+                       id="ticketNumber" 
+                       required 
+                       pattern="[0-9]*" 
+                       inputmode="numeric" 
+                       placeholder="Sadece rakam giriniz"
+                       maxlength="20">
+            </div>
+            <button onclick="requestTicket()">Bilet Talep Et</button>
+        </div>
+        <div id="statusMessage"></div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html> 

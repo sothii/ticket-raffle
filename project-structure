@@ -1,0 +1,8 @@
+/ticket-raffle-system
+    /css
+        style.css
+    /js
+        main.js
+        admin.js
+    index.html
+    admin.html 
